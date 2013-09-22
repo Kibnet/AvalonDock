@@ -341,13 +341,18 @@ namespace Xceed.Wpf.AvalonDock.Layout
         /// <remarks>Please note that usually the anchorable is only hidden (not closed). By default when user click the X button it only hides the content.</remarks>
         public void Close()
         {
-            var root = Root;
-            var parentAsContainer = Parent as ILayoutContainer;
-            parentAsContainer.RemoveChild(this);
-            if (root != null)
-                root.CollectGarbage();
+            try
+            {
+                var root = Root;
+                var parentAsContainer = Parent as ILayoutContainer;
+                if (parentAsContainer != null)
+                    parentAsContainer.RemoveChild(this);
+                if (root != null)
+                    root.CollectGarbage();
 
-            OnClosed();
+                OnClosed();
+            }
+            catch { }
         }
 
         /// <summary>
