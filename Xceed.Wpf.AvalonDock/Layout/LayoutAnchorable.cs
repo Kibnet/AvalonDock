@@ -29,6 +29,15 @@ namespace Xceed.Wpf.AvalonDock.Layout
     [Serializable]
     public class LayoutAnchorable : LayoutContent
     {
+        #region HideOnClose
+        private bool _HideOnClose = false;
+        public bool HideOnClose
+        {
+            get { return _HideOnClose; }
+            set { _HideOnClose = value; }
+        }
+        #endregion 
+
         #region IsVisible
         [XmlIgnore]
         public bool IsVisible
@@ -187,6 +196,16 @@ namespace Xceed.Wpf.AvalonDock.Layout
                 OnHiding(args);
                 if (args.Cancel)
                     return;
+                if (this.IsFloating)
+                {
+                    var c = new CancelEventArgs();
+                    OnClosing(c);
+                    if (c.Cancel == false)
+                    {
+                        Close();
+                        return;
+                    }
+                }
             }
 
             RaisePropertyChanging("IsHidden");
