@@ -421,6 +421,19 @@ namespace Xceed.Wpf.AvalonDock.Layout
 
         public virtual void WriteXml(System.Xml.XmlWriter writer)
         {
+            //write strong type if necessary (if it's not a basic object )
+            var type = this.GetType();
+            if (type.Name != "LayoutAnchorablePaneGroup" &&
+                type.Name != "LayoutAnchorablePane" &&
+                type.Name != "LayoutAnchorable" &&
+                type.Name != "LayoutDocumentPaneGroup" &&
+                type.Name != "LayoutDocumentPane" &&
+                type.Name != "LayoutDocument" &&
+                type.Name != "LayoutAnchorGroup" &&
+                type.Name != "LayoutPanel"
+                )
+                writer.WriteAttributeString("StrongType", type.AssemblyQualifiedName);
+
             if (!string.IsNullOrWhiteSpace(Title))
                 writer.WriteAttributeString("Title", Title);
 
