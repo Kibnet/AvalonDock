@@ -274,6 +274,12 @@ namespace Xceed.Wpf.AvalonDock.Layout
                 }
             }
         }
+
+        public IEnumerable<ILayoutElement> Children_FlatHierarchy
+        {
+            get { return this.Descendents(); }
+        }
+
         public void RemoveChild(ILayoutElement element)
         {
             if (element == RootPanel)
