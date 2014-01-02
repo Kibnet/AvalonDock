@@ -36,6 +36,7 @@ namespace Xceed.Wpf.AvalonDock.Controls
 
         public LayoutDocumentTabItem()
         {
+            this.AllowDrop = true;
         }
 
         #region Model
@@ -223,6 +224,12 @@ namespace Xceed.Wpf.AvalonDock.Controls
             }
 
             base.OnMouseDown(e);
+        }
+
+        protected override void OnDragOver(DragEventArgs e)
+        {
+            base.OnDragOver(e);
+            Model.IsActive = true;
         }
     }
 }

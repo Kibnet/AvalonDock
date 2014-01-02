@@ -41,6 +41,8 @@ namespace Xceed.Wpf.AvalonDock.Controls
             _model.IsSelectedChanged += new EventHandler(_model_IsSelectedChanged);
 
             SetSide(_model.FindParent<LayoutAnchorSide>().Side);
+
+            this.AllowDrop = true;
         }
 
         void _model_IsSelectedChanged(object sender, EventArgs e)
@@ -179,6 +181,11 @@ namespace Xceed.Wpf.AvalonDock.Controls
 
         #endregion
 
+        protected override void OnDragOver(DragEventArgs e)
+        {
+            base.OnDragOver(e);
+            _model.IsActive = true;
+        }
 
     }
 }
