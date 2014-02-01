@@ -299,10 +299,13 @@ namespace Xceed.Wpf.AvalonDock
 
         void DockingManager_Unloaded(object sender, RoutedEventArgs e)
         {
-
+#if RELEASE
+            try
+#endif
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                _autoHideWindowManager.HideAutoWindow();
+                if (_autoHideWindowManager != null)
+                    _autoHideWindowManager.HideAutoWindow();
 
                 foreach (var fw in _fwList.ToArray())
                 {
@@ -315,6 +318,10 @@ namespace Xceed.Wpf.AvalonDock
                 DestroyOverlayWindow();
                 FocusElementManager.FinalizeFocusManagement(this);
             }
+#if RELEASE
+            }
+            catch {}
+#endif
         }
 
         internal UIElement CreateUIElementForModel(ILayoutElement model)
